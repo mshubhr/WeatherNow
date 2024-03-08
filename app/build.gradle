@@ -1,6 +1,23 @@
+<<<<<<< HEAD
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+=======
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath libs.gradle
+        classpath libs.kotlin.gradle.plugin
+    }
+}
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+>>>>>>> 32746ce (almost done)
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
 }
@@ -27,11 +44,21 @@ android {
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
+<<<<<<< HEAD
                 targetCompatibility JavaVersion.VERSION_1_8
+=======
+        targetCompatibility JavaVersion.VERSION_1_8
+>>>>>>> 32746ce (almost done)
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
+<<<<<<< HEAD
+=======
+    dataBinding {
+        enabled = true
+    }
+>>>>>>> 32746ce (almost done)
 }
 
 dependencies {
@@ -40,6 +67,10 @@ dependencies {
     implementation libs.androidx.appcompat
     implementation libs.material.v150
     implementation libs.androidx.constraintlayout
+<<<<<<< HEAD
+=======
+    implementation libs.play.services.location
+>>>>>>> 32746ce (almost done)
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
