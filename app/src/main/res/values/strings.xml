@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WeatherNow</string>
+    <string name="temp_format">%.2f°</string>
+    <string name="speed_format">%.2f m/s</string>
+    <string name="humidity_format">%d %%</string>
+    <string name="rain_format">%d mm</string>
+    <string name="error_no_internet">Please turn on the internet</string>
 </resources>

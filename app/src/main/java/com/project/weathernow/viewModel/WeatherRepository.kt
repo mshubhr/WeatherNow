@@ -1,6 +1,5 @@
-package com.project.weathernow.repository
+package com.project.weathernow.viewModel
 
-import com.project.weathernow.models.WeatherList
 import com.project.weathernow.api.RetrofitInstance
 import com.project.weathernow.db.WeatherDatabase
 import com.project.weathernow.models.ForeCast

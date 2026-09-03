@@ -16,8 +16,7 @@ class Converters {
     fun fromMain(main: Main?): String? = Gson().toJson(main)
 
     @TypeConverter
-    fun toMain(mainJson: String?): Main? =
-        Gson().fromJson(mainJson, Main::class.java)
+    fun toMain(mainJson: String?): Main? = Gson().fromJson(mainJson, Main::class.java)
 
     @TypeConverter
     fun fromWeather(weatherList: ArrayList<Weather>?): String? {
@@ -26,8 +25,7 @@ class Converters {
 
     @TypeConverter
     fun toWeather(weatherListJson: String?): ArrayList<Weather>? {
-        val listType = object : TypeToken<ArrayList<Weather>>() {}.type
-        return Gson().fromJson(weatherListJson, listType)
+        return Gson().fromJson(weatherListJson, object : TypeToken<ArrayList<Weather>>() {}.type)
     }
 
     @TypeConverter
@@ -37,29 +35,26 @@ class Converters {
 
     @TypeConverter
     fun toWeatherList(json: String): ArrayList<WeatherList> {
-        val listType = object : TypeToken<ArrayList<WeatherList>>() {}.type
-        return Gson().fromJson(json, listType)
+        return Gson().fromJson(json, object : TypeToken<ArrayList<WeatherList>>() {}.type)
     }
+
     @TypeConverter
     fun fromClouds(clouds: Clouds?): String? = Gson().toJson(clouds)
 
     @TypeConverter
-    fun toClouds(cloudsJson: String?): Clouds? =
-        Gson().fromJson(cloudsJson, Clouds::class.java)
+    fun toClouds(cloudsJson: String?): Clouds? = Gson().fromJson(cloudsJson, Clouds::class.java)
 
     @TypeConverter
     fun fromWind(wind: Wind?): String? = Gson().toJson(wind)
 
     @TypeConverter
-    fun toWind(windJson: String?): Wind? =
-        Gson().fromJson(windJson, Wind::class.java)
+    fun toWind(windJson: String?): Wind? = Gson().fromJson(windJson, Wind::class.java)
 
     @TypeConverter
     fun fromSys(sys: Sys?): String? = Gson().toJson(sys)
 
     @TypeConverter
-    fun toSys(sysJson: String?): Sys? =
-        Gson().fromJson(sysJson, Sys::class.java)
+    fun toSys(sysJson: String?): Sys? = Gson().fromJson(sysJson, Sys::class.java)
 
     @TypeConverter
     fun fromCity(city: City): String {

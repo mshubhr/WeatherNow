@@ -1,8 +1,8 @@
-package com.project.weathernow
+package com.project.weathernow.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class SharedPrefs internal constructor(private val context: Context) {
 
@@ -10,7 +10,6 @@ class SharedPrefs internal constructor(private val context: Context) {
         private const val SHARED_PREFS_NAME = "my_prefs"
         private const val KEY_CITY = "city"
 
-        @SuppressLint("StaticFieldLeak")
         private var instance: SharedPrefs? = null
 
         fun getInstance(context: Context): SharedPrefs {
@@ -26,7 +25,7 @@ class SharedPrefs internal constructor(private val context: Context) {
     }
 
     fun setValue(key: String, value: String) {
-        prefs.edit().putString(key, value).apply()
+        prefs.edit { putString(key, value) }
     }
 
     fun getValue(key: String): String? {
@@ -35,7 +34,7 @@ class SharedPrefs internal constructor(private val context: Context) {
 
     fun setValueOrNull(key: String?, value: String?) {
         if (key != null && value != null) {
-            prefs.edit().putString(key, value).apply()
+            prefs.edit { putString(key, value) }
         }
     }
 
@@ -47,6 +46,6 @@ class SharedPrefs internal constructor(private val context: Context) {
     }
 
     fun clearCityValue() {
-        prefs.edit().remove(KEY_CITY).apply()
+        prefs.edit { remove(KEY_CITY) }
     }
 }
