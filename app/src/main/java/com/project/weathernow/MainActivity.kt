@@ -1,8 +1,6 @@
 package com.project.weathernow
 
-<<<<<<< HEAD
-class MainActivity {
-=======
+import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -208,7 +206,7 @@ class MainActivity : AppCompatActivity() {
     private fun getLastKnownLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             // Permission is granted, request location updates
@@ -226,12 +224,13 @@ class MainActivity : AppCompatActivity() {
             // Request permission
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -240,10 +239,7 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, request location updates
                 getLastKnownLocation()
-            } else {
-                // Permission denied, handle accordingly
             }
         }
     }
@@ -252,5 +248,4 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_LOCATION_PERMISSION = 1001
     }
 
->>>>>>> 32746ce (almost done)
 }

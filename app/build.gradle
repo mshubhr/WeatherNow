@@ -1,35 +1,17 @@
-<<<<<<< HEAD
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-=======
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath libs.gradle
-        classpath libs.kotlin.gradle.plugin
-    }
-}
-
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
->>>>>>> 32746ce (almost done)
-    id 'kotlin-kapt'
     id 'kotlin-parcelize'
 }
 
 android {
     namespace 'com.project.weathernow'
-    compileSdk 34
+    compileSdk = 37
 
     defaultConfig {
         applicationId "com.project.weathernow"
         minSdk 24
-        targetSdk 34
+        targetSdk 37
         versionCode 1
         versionName "1.0"
 
@@ -44,21 +26,14 @@ android {
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
-<<<<<<< HEAD
-                targetCompatibility JavaVersion.VERSION_1_8
-=======
         targetCompatibility JavaVersion.VERSION_1_8
->>>>>>> 32746ce (almost done)
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
-<<<<<<< HEAD
-=======
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
->>>>>>> 32746ce (almost done)
 }
 
 dependencies {
@@ -67,21 +42,15 @@ dependencies {
     implementation libs.androidx.appcompat
     implementation libs.material.v150
     implementation libs.androidx.constraintlayout
-<<<<<<< HEAD
-=======
     implementation libs.play.services.location
->>>>>>> 32746ce (almost done)
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
-    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.lifecycle.viewmodel.ktx270
     implementation libs.androidx.room.runtime
-    //noinspection KaptUsageInsteadOfKsp
-    kapt libs.androidx.room.compiler
     implementation libs.androidx.room.ktx
     implementation libs.kotlinx.coroutines.core
     implementation libs.kotlinx.coroutines.android
-    implementation libs.androidx.lifecycle.viewmodel.ktx.v220
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.retrofit
     implementation libs.converter.gson
@@ -89,6 +58,4 @@ dependencies {
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.androidx.navigation.ui.ktx
     implementation libs.glide
-    //noinspection KaptUsageInsteadOfKsp
-    kapt libs.compiler
 }

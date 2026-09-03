@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-=======
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isVisible"
             type="Boolean" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,6 +36,8 @@
                 android:drawableStart="@drawable/round_search_24"
                 android:drawablePadding="15dp"
                 android:hint="Search for a city"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:paddingStart="15dp"
                 android:paddingTop="6dp"
                 android:paddingEnd="5dp"
@@ -48,8 +45,6 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="italic"
-                android:inputType="text"
-                android:imeOptions="actionDone"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="parent"
@@ -103,4 +98,3 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
->>>>>>> 32746ce (almost done)
