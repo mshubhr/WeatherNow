@@ -1,6 +1,6 @@
 package com.project.weathernow.api
 
-import com.project.weathernow.utils.Utils
+import com.project.weathernow.Utils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -4,29 +4,9 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.project.weathernow.models.City
-import com.project.weathernow.models.Clouds
 import com.project.weathernow.models.WeatherList
-import com.project.weathernow.models.Main
-import com.project.weathernow.models.Sys
-import com.project.weathernow.models.Weather
-import com.project.weathernow.models.Wind
 
 class Converters {
-    @TypeConverter
-    fun fromMain(main: Main?): String? = Gson().toJson(main)
-
-    @TypeConverter
-    fun toMain(mainJson: String?): Main? = Gson().fromJson(mainJson, Main::class.java)
-
-    @TypeConverter
-    fun fromWeather(weatherList: ArrayList<Weather>?): String? {
-        return Gson().toJson(weatherList)
-    }
-
-    @TypeConverter
-    fun toWeather(weatherListJson: String?): ArrayList<Weather>? {
-        return Gson().fromJson(weatherListJson, object : TypeToken<ArrayList<Weather>>() {}.type)
-    }
 
     @TypeConverter
     fun fromWeatherList(weatherList: ArrayList<WeatherList>): String {
@@ -37,24 +17,6 @@ class Converters {
     fun toWeatherList(json: String): ArrayList<WeatherList> {
         return Gson().fromJson(json, object : TypeToken<ArrayList<WeatherList>>() {}.type)
     }
-
-    @TypeConverter
-    fun fromClouds(clouds: Clouds?): String? = Gson().toJson(clouds)
-
-    @TypeConverter
-    fun toClouds(cloudsJson: String?): Clouds? = Gson().fromJson(cloudsJson, Clouds::class.java)
-
-    @TypeConverter
-    fun fromWind(wind: Wind?): String? = Gson().toJson(wind)
-
-    @TypeConverter
-    fun toWind(windJson: String?): Wind? = Gson().fromJson(windJson, Wind::class.java)
-
-    @TypeConverter
-    fun fromSys(sys: Sys?): String? = Gson().toJson(sys)
-
-    @TypeConverter
-    fun toSys(sysJson: String?): Sys? = Gson().fromJson(sysJson, Sys::class.java)
 
     @TypeConverter
     fun fromCity(city: City): String {

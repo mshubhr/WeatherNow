@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -94,7 +93,6 @@ class WeatherViewModel(app: Application, val weatherRepository: WeatherRepositor
         weatherRepository.insertWeather(list)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun findClosestWeather(weatherList: List<WeatherList>): WeatherList? {
         val systemTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
         var closestWeather: WeatherList? = null

@@ -1,7 +1,7 @@
 package com.project.weathernow.api
 
 import com.project.weathernow.models.ForeCast
-import com.project.weathernow.utils.Utils
+import com.project.weathernow.Utils
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

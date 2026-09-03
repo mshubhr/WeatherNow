@@ -1,4 +1,4 @@
-package com.project.weathernow.utils
+package com.project.weathernow
 
 class Utils {
     companion object {

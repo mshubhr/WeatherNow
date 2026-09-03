@@ -3,12 +3,10 @@ package com.project.weathernow.view
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val newsRepository = WeatherRepository(WeatherDatabase.Companion(this))
         val viewModelProviderFactory = WeatherViewModelProviderFactory(application, newsRepository)
 
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(WeatherViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelProviderFactory)[WeatherViewModel::class.java]
         adapter = WeatherToday()
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -78,31 +76,23 @@ class MainActivity : AppCompatActivity() {
                 getString(R.string.speed_format, it.wind?.speed ?: 0.0)
             binding.layoutWeather.weatherRain.text =
                 getString(R.string.rain_format, it.clouds?.all ?: 0)
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-            val date = inputFormat.parse(it.dtTxt!!)
-            val outputFormat = SimpleDateFormat("d MMMM EEEE,  HH:mm", Locale.getDefault())
-            val dateanddayname = outputFormat.format(date!!)
-            binding.layoutWeather.weatherDate.text = dateanddayname
-            // setting the icon
+            binding.layoutWeather.weatherDate.text = SimpleDateFormat("d MMMM EEEE,  HH:mm", Locale.getDefault()).format(SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).parse(it.dtTxt!!)!!)
+
             for (i in it.weather) {
                 if (i.icon == "01d") {
                     Glide.with(binding.layoutWeather.weatherImage.context).load(R.drawable.oned)
                         .into(binding.layoutWeather.weatherImage)
-
                 }
 
                 if (i.icon == "01n") {
                     Glide.with(binding.layoutWeather.weatherImage.context).load(R.drawable.onen)
                         .into(binding.layoutWeather.weatherImage)
-
                 }
 
                 if (i.icon == "02d") {
                     Glide.with(binding.layoutWeather.weatherImage.context).load(R.drawable.twod)
                         .into(binding.layoutWeather.weatherImage)
-
                 }
-
 
                 if (i.icon == "02n") {
                     Glide.with(binding.layoutWeather.weatherImage.context).load(R.drawable.twon)
@@ -171,8 +161,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.todayWeatherLiveData.observe(this, Observer {
-            val setNewlist = it as List<WeatherList>
-            adapter.setList(setNewlist)
+            adapter.setList(it as List<WeatherList>)
             binding.recyclerView.adapter = adapter
         })
 
@@ -183,10 +172,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         getLastKnownLocation()
-
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getLastKnownLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION

@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "forecast_list")
-
 data class ForeCast(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @SerializedName("cod") var cod: String? = null,
