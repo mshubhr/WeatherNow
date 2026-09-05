@@ -16,15 +16,12 @@ abstract class WeatherDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var instance: WeatherDatabase? = null
-        private val LOCK = Any()
 
-        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: createDatabase(context).also { instance = it }
+        operator fun invoke(context: Context) = instance ?: synchronized(Any()) {
+            instance ?: Room.databaseBuilder(
+                context.applicationContext, WeatherDatabase::class.java, "forecast_db.db"
+            ).build().also { instance = it }
         }
-
-        private fun createDatabase(context: Context) = Room.databaseBuilder(
-            context.applicationContext, WeatherDatabase::class.java, "forecast_db.db"
-        ).build()
     }
 
 }
