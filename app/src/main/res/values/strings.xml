@@ -5,4 +5,11 @@
     <string name="humidity_format">%d %%</string>
     <string name="rain_format">%d mm</string>
     <string name="error_no_internet">Please turn on the internet</string>
+    <string name="search_for_a_city">Search for a city</string>
+    <string name="_20_00">20:00</string>
+    <string name="_20">20</string>
+    <string name="_100_m_s">100 m/s</string>
+    <string name="rain">Rain</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
 </resources>

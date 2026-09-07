@@ -8,9 +8,9 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationServices
@@ -30,8 +30,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: WeatherViewModel
     private lateinit var adapter: WeatherToday
+
+    private val weatherRepository by lazy {
+        WeatherRepository(WeatherDatabase(applicationContext))
+    }
+    private val viewModelFactory by lazy {
+        WeatherViewModelProviderFactory(application, weatherRepository)
+    }
+    private val viewModel: WeatherViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +46,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(
-            this,
-            WeatherViewModelProviderFactory(application, WeatherRepository(WeatherDatabase(this)))
-        )[WeatherViewModel::class.java]
 
         adapter = WeatherToday()
         binding.recyclerView.apply {
@@ -108,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.todayWeatherLiveData.observe(this) { list ->
-            adapter.setList(list)
+            adapter.submitList(list)
         }
 
         viewModel.showToast.observe(this) { show ->

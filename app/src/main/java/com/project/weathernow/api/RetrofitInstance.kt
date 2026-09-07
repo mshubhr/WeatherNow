@@ -1,6 +1,5 @@
 package com.project.weathernow.api
 
-import com.project.weathernow.Utils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +10,7 @@ class RetrofitInstance {
         private val retrofit by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-            Retrofit.Builder().baseUrl(Utils.BASE_URL)
+            Retrofit.Builder().baseUrl("https://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(OkHttpClient.Builder().addInterceptor(logging).build()).build()
         }

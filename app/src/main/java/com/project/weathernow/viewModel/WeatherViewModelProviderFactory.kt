@@ -5,11 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 class WeatherViewModelProviderFactory(
-    val app: Application, val weatherRepository: WeatherRepository
+    private val app: Application, private val weatherRepository: WeatherRepository
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return WeatherViewModel(app, weatherRepository) as T
-    }
+        if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
+            return modelClass.cast(
+                WeatherViewModel(app, weatherRepository)
+            )!!
+        }
 
+        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+    }
 }
