@@ -18,7 +18,12 @@ import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
 
-class WeatherViewModel(app: Application, val weatherRepository: WeatherRepository) : AndroidViewModel(app) {
+class WeatherViewModel(
+    app: Application, val weatherRepository: WeatherRepository
+) : AndroidViewModel(app) {
+
+    private val dayFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     val todayWeatherLiveData = MutableLiveData<List<WeatherList>>()
     val weatherLiveData = MutableLiveData<WeatherList?>()
@@ -33,11 +38,9 @@ class WeatherViewModel(app: Application, val weatherRepository: WeatherRepositor
                 val todayWeatherList = mutableListOf<WeatherList>()
                 cityName.postValue(forecast[forecast.size - 1].city!!.name)
 
+                val todayDate = dayFormat.format(Date())
                 forecast[forecast.size - 1].weatherList.forEach { weather ->
-                    if (weather.dtTxt!!.split("\\s".toRegex()).contains(
-                            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                        )
-                    ) {
+                    if (weather.dtTxt!!.split("\\s".toRegex()).contains(todayDate)) {
                         todayWeatherList.add(weather)
                     }
                 }
@@ -61,13 +64,11 @@ class WeatherViewModel(app: Application, val weatherRepository: WeatherRepositor
 
                 if (response.isSuccessful) {
                     cityName.postValue(response.body()?.city!!.name)
+                    val todayDate = dayFormat.format(Date())
 
                     response.body()?.weatherList?.forEach { weather ->
-                        if (weather.dtTxt!!.split("\\s".toRegex()).contains(
-                                SimpleDateFormat(
-                                    "yyyy-MM-dd", Locale.getDefault()
-                                ).format(Date())
-                            )
+                        if (weather.dtTxt!!.split("\\s".toRegex())
+                                .contains(todayDate)
                         ) todayWeatherList.add(weather)
                     }
 
@@ -86,14 +87,13 @@ class WeatherViewModel(app: Application, val weatherRepository: WeatherRepositor
     private fun findClosestWeather(weatherList: List<WeatherList>): WeatherList? {
         var closestWeather: WeatherList? = null
         var minTimeDifference = Int.MAX_VALUE
+        val currentTime = timeFormat.format(Date())
 
         for (weather in weatherList) {
             val timeDifference = abs(
                 timeToMinutes(
                     weather.dtTxt!!.substring(11, 16)
-                ) - timeToMinutes(
-                    SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-                )
+                ) - timeToMinutes(currentTime)
             )
 
             if (timeDifference < minTimeDifference) {

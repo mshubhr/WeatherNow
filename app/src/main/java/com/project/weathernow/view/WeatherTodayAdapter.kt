@@ -55,23 +55,9 @@ class WeatherToday : ListAdapter<WeatherList, WeatherToday.TodayHolder>(WeatherD
                 R.string.speed_format, todayForecast.wind?.speed ?: 0.0
             )
 
-            Glide.with(context).load(
-                when (todayForecast.weather.firstOrNull()?.icon) {
-                    "01d" -> R.drawable.oned
-                    "01n" -> R.drawable.onen
-                    "02d" -> R.drawable.twod
-                    "02n" -> R.drawable.twon
-                    "03d", "03n" -> R.drawable.threedn
-                    "04d", "04n" -> R.drawable.fourdn
-                    "09d", "09n" -> R.drawable.ninedn
-                    "10d" -> R.drawable.tend
-                    "10n" -> R.drawable.tenn
-                    "11d", "11n" -> R.drawable.elevend
-                    "13d", "13n" -> R.drawable.thirteend
-                    "50d", "50n" -> R.drawable.fiftydn
-                    else -> R.drawable.oned
-                }
-            ).into(binding.weatherIcon)
+            Glide.with(context)
+                .load(WeatherUtils.getWeatherIcon(todayForecast.weather.firstOrNull()?.icon))
+                .into(binding.weatherIcon)
         }
 
     }

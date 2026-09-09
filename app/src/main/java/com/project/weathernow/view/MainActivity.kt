@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: WeatherToday
 
+    private val outputDateFormat = SimpleDateFormat("d MMMM EEEE, HH:mm", Locale.getDefault())
+    private val inputDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+
     private val weatherRepository by lazy {
         WeatherRepository(WeatherDatabase(applicationContext))
     }
@@ -68,44 +71,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.weatherLiveData.observe(this) { weather ->
+            weather ?: return@observe
             binding.parentView.visibility = View.VISIBLE
 
             binding.layoutWeather.apply {
-                weatherType.text = weather?.weather?.firstOrNull()?.description
+                weatherType.text = weather.weather.firstOrNull()?.description
                 weatherTemp.text =
-                    getString(R.string.temp_format, weather?.main?.temp?.minus(273.15) ?: 0.0)
+                    getString(R.string.temp_format, weather.main?.temp?.minus(273.15) ?: 0.0)
                 weatherHumidity.text =
-                    getString(R.string.humidity_format, weather?.main?.humidity ?: 0)
-                weatherWind.text = getString(R.string.speed_format, weather?.wind?.speed ?: 0.0)
-                weatherRain.text = getString(R.string.rain_format, weather?.clouds?.all ?: 0)
+                    getString(R.string.humidity_format, weather.main?.humidity ?: 0)
+                weatherWind.text = getString(R.string.speed_format, weather.wind?.speed ?: 0.0)
+                weatherRain.text = getString(R.string.rain_format, weather.clouds?.all ?: 0)
 
-                weatherDate.text = try {
-                    SimpleDateFormat("d MMMM EEEE, HH:mm", Locale.getDefault()).format(
-                        SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).parse(
-                            weather?.dtTxt!!
-                        )!!
-                    )
-                } catch (_: Exception) {
-                    weather?.dtTxt
-                }
-
-                Glide.with(this@MainActivity).load(
-                    when (weather?.weather?.firstOrNull()?.icon) {
-                        "01d" -> R.drawable.oned
-                        "01n" -> R.drawable.onen
-                        "02d" -> R.drawable.twod
-                        "02n" -> R.drawable.twon
-                        "03d", "03n" -> R.drawable.threedn
-                        "04d", "04n" -> R.drawable.fourdn
-                        "09d", "09n" -> R.drawable.ninedn
-                        "10d" -> R.drawable.tend
-                        "10n" -> R.drawable.tenn
-                        "11d", "11n" -> R.drawable.elevend
-                        "13d", "13n" -> R.drawable.thirteend
-                        "50d", "50n" -> R.drawable.fiftydn
-                        else -> R.drawable.oned
+                weatherDate.text = weather.dtTxt?.let { dt ->
+                    try {
+                        inputDateFormat.parse(dt)?.let { outputDateFormat.format(it) }
+                    } catch (_: Exception) {
+                        dt
                     }
-                ).into(weatherImage)
+                } ?: ""
+
+                Glide.with(this@MainActivity)
+                    .load(WeatherUtils.getWeatherIcon(weather.weather.firstOrNull()?.icon))
+                    .into(weatherImage)
             }
         }
 
@@ -118,6 +106,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         getLastKnownLocation()
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        Glide.get(this).trimMemory(level)
     }
 
     private fun getLastKnownLocation() {
